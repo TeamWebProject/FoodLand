@@ -25,7 +25,8 @@
                                 <input type="text" name="pricestring" th:value="${menu.price}">
                                 <!--사진 첨부-->
                                 <div style="width:40%; background: white; box-shadow:0px 0px 10px rgba(0,0,0,0.2);border-radius: 10px; padding : 10px; ">
-                                    <input type="file" name="fileList" id="fileList" multiple/>
+<!--                                    <input type="file" name="fileList" id="fileList" multiple/>-->
+                                    <input type="file" name="file" id="file" accept="image/*" />
                                     <div th:each="photo : ${menu.photoList}">
                                         <img th:src="@{|/photo/${photo.fileName}|}" alt="Menu Photo"/>
                                     </div>

@@ -2,6 +2,7 @@
 <div layout:fragment="content">
     <div class="container my-3">
         <div class="top-buttons" style="margin-bottom:10px;">
+            <a class="btn btn-sm btn-light" th:href="@{|/store/detail/${store.id}|}">가게보기</a>
             <a class="btn btn-sm btn-light" th:href="@{|/store/owner/list|}">뒤로가기</a>
             <input class="btn btn-sm btn-light" type="button" onclick="clone();" value="사진추가">
         </div>
