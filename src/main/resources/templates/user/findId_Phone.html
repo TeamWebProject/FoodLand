@@ -1,0 +1,74 @@
+<html layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<div layout:fragment="content" class="content-area" style="height: 93.8%;">
+    <div class="container d-flex justify-content-center align-items-center" style="width:100%; height: 100%;">
+        <div class="d-flex flex-column justify-content-start align-items-center" style="border: 2px solid gray; border-radius: 20px; width: 70%;height: 70%;">
+            <form th:action="@{/user/sendVerificationCodeSMS}" class="mt-5 text-center" method="post">
+                <h2 style="margin-bottom: 20px;">아이디 찾기</h2>
+                <input type="hidden" name="findCommon" value="findId">
+                <div class="d-flex justify-content-center">
+                    <div class="form-group">
+                        <label for="phone" class="d-flex justify-content-start">휴대전화번호로 찾기</label>
+                        <div class="d-flex">
+                            <input type="text" id="phone" name="phone" class="form-control" style="width: 300px; margin-right:10px;" th:value="${phone}">
+                            <button type="submit" id="verificationCodeButton" class="reset-btn btn btn-dark"  formaction="/user/sendVerificationCodeSMS">인증요청</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- 인증 코드 입력 폼 -->
+            <form th:action="@{/user/findIdPhone}" method="post" class="mt-5 text-center" th:if="${verificationCodeFormSMS}">
+                <input type="hidden" name="verificationCodeFormSMS" th:value="${verificationCodeFormSMS}">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="form-group">
+                        <label for="verificationCodeSMS" class="d-flex justify-content-start">인증 코드:</label>
+                        <div class="d-flex">
+                            <input type="text" id="verificationCodeSMS" name="verificationCodeSMS" class="form-control" style="width: 300px; margin-right:10px;">
+                            <button type="submit" class="reset-btn btn btn-dark">아이디 찾기</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- 아이디 찾기 결과가 있을 때에만 보여줌 -->
+            <div th:if="${verificationCodeMismatchSMS != null and verificationCodeMismatchSMS != true}">
+                <div class="alert alert-success text-center" style="margin-top: 20px;">
+                    <p class="d-flex justify-content-start">찾은 아이디:</p>
+                    <div class="alert alert-success text-center" style="width: 100%; height: 150px; overflow-y: auto;">
+                        <table class="table">
+                            <tbody>
+                            <tr th:each="user, stat : ${userList}">
+                                <td>
+                                    <span th:text="${stat.index + 1} + '.'" style="margin-right: 5px;"></span>
+                                </td>
+                                <td>
+                                    <span th:if="${user.provider == 'Google'}">Google 소셜로그인</span>
+                                    <span th:if="${user.provider == 'Naver'}">Naver 소셜로그인</span>
+                                    <span th:if="${user.provider == 'Kakao'}">Kakao 소셜로그인</span>
+                                    <span th:unless="${user.provider == 'Google' || user.provider == 'Naver' || user.provider == 'Kakao'}" th:text="${user.userId}" style="margin-right: 5px;"></span>
+                                </td>
+                                <td>
+                                    <span th:text="${#temporals.format(user.createDate, 'yyyy-MM-dd')} + ' <가입>'" style="margin-right: 5px;"></span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- 휴대전화 인증번호 결과가 있을 때에만 보여줌 -->
+            <!-- 인증 코드 불일치한 경우 -->
+            <div th:if="${verificationCodeMismatchSMS}" class="mt-4">
+                <div class="row mt-3">
+                    <p class="alert alert-danger" style="background:lightred; border: 2px solid red; border-radius:10px; text-align:center; color: red;">인증 코드가 일치하지 않습니다.</p>
+                </div>
+            </div>
+            <!-- 아이디를 찾지 못한 경우 -->
+            <div th:if="${notFound1}" class="mt-4">
+                <div class="row mt-3">
+                    <p class="alert alert-warning" style="background:white;border: none; text-align:center; color: black; width: 41%;margin-left: auto;margin-right: auto;"
+                       th:text="${errorMessage1}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

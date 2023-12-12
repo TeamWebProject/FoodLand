@@ -36,4 +36,6 @@ public class User {
     private String filePath;  // 파일 저장 경로
 
     private String provider;
+
+    private String phone;
 }
