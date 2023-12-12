@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.thymeleaf.spring6.processor.SpringUErrorsTagProcessor;
 
 @Getter
 @Setter
@@ -20,11 +21,15 @@ public class UserCreateForm {
     @NotEmpty(message = "비밀번호 확인은 필수항목입니다.")
     private String password2;
 
-    @Size(min = 5, message = "닉네임은 5글자 이상이어야 합니다.") // 수정된 부분
+    @Size(min = 3, message = "닉네임은 3글자 이상이어야 합니다.") // 수정된 부분
     @NotEmpty(message = "닉네임은 필수항목입니다.")
     private String nickname;
 
     @NotEmpty(message = "이메일은 필수항목입니다.")
     @Email
     private String email;
+
+    private String phone;
+
+    private String verificationNum;
 }

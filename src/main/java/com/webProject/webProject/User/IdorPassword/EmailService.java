@@ -19,7 +19,10 @@ public class EmailService {
         javaMailSender.send(message);
         return verificationCode;
     }
-    public void sendVerificationCodeSMS(String phone, String verificationCodeSMS) {
-        System.out.println("Verification code for phone number " + phone + ": " + verificationCodeSMS);
+    public String sendVerificationCodeSMS(String phone) {
+        String storedVerificationCode = String.valueOf((int) (Math.random() * 9000) + 1000);
+
+        System.out.println("Verification code for phone number " + phone + ": " + storedVerificationCode);
+        return storedVerificationCode;
     }
 }

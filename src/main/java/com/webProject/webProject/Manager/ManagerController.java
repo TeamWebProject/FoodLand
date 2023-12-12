@@ -44,9 +44,12 @@ public class ManagerController {
     @GetMapping("/member/delete/{id}")
     public String memberDelete(@PathVariable("id") String id) {
         User user = this.userService.getUser(id);
+        this.reviewService.deleteReviewsByUser(user);
         this.userService.delete(user);
         return "redirect:/manager/member";
     }
+
+
 
 
     @GetMapping("/owner")
