@@ -51,81 +51,106 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- 페이징처리 시작 -->
-                    <div style="display:flex;">
-                        <div th:if="${!paging.isEmpty()}" style="width:100%; margin-bottom:200px; margin-top:30px;" >
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-                                    <a class="page-link"
-                                       th:href="@{|?page=${paging.number-1}|}">
-                                        <span>&laquo;</span>
-                                    </a>
-                                </li>
+
+                    <nav th:if="${!paging.isEmpty()}" aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li calss="page-item">
+                                <a class="page-link" th:href="@{|?page=0|}" aria-label="Previous">
+                                    <span aria-hidden="true">처음</span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                                <a class="page-link" th:href="@{|?page=${paging.number-1}|}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}" th:classappend="${page == paging.number} ? 'active'"
+                                class="page-item">
+                                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}" ></a>
+                            </li>
+                            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                                <a class="page-link" th:href="@{|?page=${paging.number+1}|}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{|?page=${paging.totalPages - 1}|}" aria-label="Previous">
+                                    <span aria-hidden="true">마지막</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
 
 
-                                <!--수정한 코드--><!--태원님 페이징처리 ui수정 부탁-->
-                                <li th:each="page: ${#numbers.sequence((paging.number <= 5 ? 0 : (paging.number - 5)),
-                                 (paging.number <= 5 ? 10 : (paging.number + 5 < paging.totalPages ? paging.number + 4 : paging.totalPages))
-                                  )}" th:classappend="${page == paging.number} ? 'active'" class="page-item">
-                                    <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
-                                </li>
-                                <!--        (paging.number <= 5 ? 1 : (paging.number - 5))
-                                            : 시작 범위를 결정하는 부분입니다.  현재 페이지 번호(paging.number)가 5 이하이면 1부터 시작하고, 그렇지 않으면 현재 페이지에서 5를 뺀 값으로 시작합니다.  -->
 
-                                <!--        (paging.number <= 5 ? 10 : (paging.number + 5 < paging.totalPages ? paging.number + 5 : paging.totalPages))
-                                            : 현재 페이지 번호(paging.number)가 5 이하이면 10까지 표시하고, 그렇지 않으면 현재 페이지에서 5를 더한 값으로 끝내거나,
-                                              총 페이지 수를 넘어가면 총 페이지 수까지만 표시합니다. -->
-
-                                <!-- 여기까지--><!--태원님 페이징처리 ui수정 부탁 끝         -->
-
-                                <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                                    <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
-                                        <span>&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
+<!--                    <div class="page-bar">-->
+<!--                        <div th:if="${!paging.isEmpty()}" style="width:100%; margin-bottom:200px; margin-top:30px;">-->
+<!--                            <ul class="pagination justify-content-center">-->
+<!--                                <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'" style="width:100px; height:10px;">-->
+<!--                                    <a class="page-link"-->
+<!--                                       th:href="@{|?page=${paging.number-1}|}" style="width:100px; height:10px;">-->
+<!--                                        <span>이전</span>-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                                <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"-->
+<!--                                    th:classappend="${page == paging.number} ? 'active'"-->
+<!--                                    class="page-item">-->
+<!--                                    <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}" style="width:100px; height:10px;"></a>-->
+<!--                                </li>-->
+<!--                                <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'" style="width:100px; height:10px;">-->
+<!--                                    <a class="page-link" th:href="@{|?page=${paging.number+1}|}">-->
+<!--                                        <span>다음</span>-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <!-- 페이징처리 끝 -->
+
+<!--                    &lt;!&ndash; 페이징처리 시작 &ndash;&gt;-->
+<!--                    <div style="display:flex;">-->
+<!--                        <div th:if="${!paging.isEmpty()}" style="width:100%; margin-bottom:200px; margin-top:30px;" >-->
+<!--                            <ul class="pagination justify-content-center">-->
+<!--                                <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">-->
+<!--                                    <a class="page-link"-->
+<!--                                       th:href="@{|?page=${paging.number-1}|}">-->
+<!--                                        <span>&laquo;</span>-->
+<!--                                    </a>-->
+<!--                                </li>-->
+
+
+<!--                                &lt;!&ndash;수정한 코드&ndash;&gt;&lt;!&ndash;태원님 페이징처리 ui수정 부탁&ndash;&gt;-->
+<!--                                <li th:each="page: ${#numbers.sequence((paging.number <= 5 ? 0 : (paging.number - 5)),-->
+<!--                                 (paging.number <= 5 ? 10 : (paging.number + 5 < paging.totalPages ? paging.number + 4 : paging.totalPages))-->
+<!--                                  )}" th:classappend="${page == paging.number} ? 'active'" class="page-item">-->
+<!--                                    <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>-->
+<!--                                </li>-->
+<!--                                &lt;!&ndash;        (paging.number <= 5 ? 1 : (paging.number - 5))-->
+<!--                                            : 시작 범위를 결정하는 부분입니다.  현재 페이지 번호(paging.number)가 5 이하이면 1부터 시작하고, 그렇지 않으면 현재 페이지에서 5를 뺀 값으로 시작합니다.  &ndash;&gt;-->
+
+<!--                                &lt;!&ndash;        (paging.number <= 5 ? 10 : (paging.number + 5 < paging.totalPages ? paging.number + 5 : paging.totalPages))-->
+<!--                                            : 현재 페이지 번호(paging.number)가 5 이하이면 10까지 표시하고, 그렇지 않으면 현재 페이지에서 5를 더한 값으로 끝내거나,-->
+<!--                                              총 페이지 수를 넘어가면 총 페이지 수까지만 표시합니다. &ndash;&gt;-->
+
+<!--                                &lt;!&ndash; 여기까지&ndash;&gt;&lt;!&ndash;태원님 페이징처리 ui수정 부탁 끝         &ndash;&gt;-->
+
+<!--                                <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">-->
+<!--                                    <a class="page-link" th:href="@{|?page=${paging.number+1}|}">-->
+<!--                                        <span>&raquo;</span>-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                    &lt;!&ndash; 페이징처리 끝 &ndash;&gt;-->
 
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-<!--<html layout:decorate="~{layout}" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">-->
-<!--<div layout:fragment="content">-->
-<!--    <div class="container my-3">-->
-<!--        <div class="col-6">-->
-<!--            <a class="btn btn-sm btn-light" th:href="@{/store/create}" style="display: flex; flex-direction: column; width: 20%;" >가게 등록</a>-->
-<!--        </div>-->
-<!--        <div th:each="store : ${ownerStoreList}">-->
-<!--            <div class="card text-dark bg-light mb-3" style="width: 80%; display: flex; flex-direction: column;">-->
-<!--                <div class="card-header">-->
-<!--                    <a  th:href="@{|/store/detail/${store.id}|}" th:text="${store.name}"></a>-->
-<!--                </div>-->
-<!--                <div class="card-body">-->
-<!--                    <h5 class="card-title" th:text="${store.category}" ></h5>-->
-<!--                    <p class="card-text" th:text="${store.content}"></p>-->
-<!--                    <p class="card-text" th:text="${#temporals.format(store.createDate, 'yyyy-MM-dd HH:mm')}"></p>-->
-<!--                </div>-->
-<!--                <div style="position: absolute; bottom: 0; right: 0;">-->
-<!--                    <a th:href="@{|/store/menuList/${store.id}|}" class="update btn btn-sm btn-outline-secondary"-->
-<!--                       th:text="메뉴관리"></a>-->
-<!--                    <a th:href="@{|/store/modify/${store.id}|}" class="update btn btn-sm btn-outline-secondary"-->
-<!--                       th:text="수정"></a>-->
-<!--                    <a href="javascript:void(0);" th:data-uri="@{|/store/delete/${store.id}|}"-->
-<!--                       class="delete btn btn-sm btn-outline-secondary" th:text="삭제"></a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 <script layout:fragment="script" type='text/javascript'>
     const delete_elements = document.getElementsByClassName("delete");
     Array.from(delete_elements).forEach(function(element) {

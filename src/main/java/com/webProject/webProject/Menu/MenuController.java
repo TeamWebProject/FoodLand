@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +40,7 @@ public class MenuController {
     }
 
     @PostMapping("/update")
-    public String update(Integer menuid, String menuName, String pricestring, List<MultipartFile> fileList) throws Exception {
+    public String update(Integer menuid, String menuName, String pricestring, MultipartFile file) throws Exception {
         Menu menu = menuService.findMenu(menuid);
         if (menuName == null || menuName.isEmpty()) {
             menu.setMenuName("--MENU--");
@@ -52,14 +53,27 @@ public class MenuController {
         } else {
             menu.setPrice(Integer.valueOf(pricestring));
         }
-        boolean filesSelected = fileList.stream().anyMatch(file -> !file.isEmpty());    // false -> true
-        if (!filesSelected) {   //false
-            photoService.savedefaultImgsForMenu(menu, fileList);
-        } else {
-            photoService.saveImgsForMenu(menu, fileList);
+//        boolean filesSelected = fileList.stream().anyMatch(file -> !file.isEmpty());    // false -> true
+//        if (!filesSelected) {   //false
+//            photoService.savedefaultImgsForMenu(menu, fileList);
+//        } else {
+//            photoService.saveImgsForMenu(menu, fileList);
+//        }
+//        menuService.setMenu(menu);
+//        return "redirect:/store/menuList/" + menu.getStore().getId();
+
+        if (file != null && !file.isEmpty()) {
+            // 파일이 선택된 경우에만 파일 저장 로직을 실행
+            photoService.deleteMenuImage(menu);
+            photoService.saveImgsForMenu(menu, Collections.singletonList(file));
+        } else if (menu.getPhotoList().isEmpty()){
+            // 파일이 선택되지 않았고, 저장된 이미지 없을 경우 기본 이미지 저장 로직 실행
+            photoService.savedefaultImgsForMenu(menu, Collections.emptyList());
         }
+
         menuService.setMenu(menu);
         return "redirect:/store/menuList/" + menu.getStore().getId();
+
     }
 
 

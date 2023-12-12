@@ -165,4 +165,19 @@ public class PhotoService {
         }
     }
 
+    public void deleteMenuImage(Menu menu) {
+        List<Photo> photos = menu.getPhotoList();
+
+        if (photos != null && !photos.isEmpty()) {
+            for (Photo photo : new ArrayList<>(photos)) {
+                File imageFile = new File(photo.getFilePath());
+                if (imageFile.exists()) {
+                    imageFile.delete();
+                }
+                this.photoRepository.delete(photo);
+                photos.remove(photo);
+            }
+        }
+    }
+
 }
