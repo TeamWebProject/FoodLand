@@ -16,7 +16,7 @@
                         <div class="mb-3">
                             메뉴
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding:10px;">
                             <div class="mb-3">
                                 <input type="hidden" name="menuid" th:value="${menu.id}">
                                 <label for="menuName" class="form-label">메뉴명</label>
@@ -30,11 +30,11 @@
                                         <img th:src="@{|/photo/${photo.fileName}|}" alt="Menu Photo"/>
                                     </div>
                                 </div>
-                                <div style="position: absolute; bottom: 0; right: 0;">
+                                <div class="d-flex justify-content-end">
                                     <div>
-                                        <input type="button" value="저장"  class="update btn btn-sm btn-outline-secondary" onclick="updatemenuFormAction(this, ACTIONS_MENUUPDATE)">
+                                        <input type="button" value="저장" style="margin-right:10px;" class="update btn btn-sm btn-outline-secondary" onclick="updatemenuFormAction(this, ACTIONS_MENUUPDATE)">
                                     </div>
-                                    <div>
+                                    <div >
                                         <input type="button" value="삭제" class="delete btn btn-sm btn-outline-secondary" onclick="updatemenuFormAction(this, ACTIONS_MENUDELETE)">
                                     </div>
                                 </div>

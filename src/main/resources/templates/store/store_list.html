@@ -4,13 +4,13 @@
         <div class="d-flex justify-content-start align-items-center" style="height:43.234px; margin:10px;">
             <form th:action="@{|/store/search_list|}" method="post" class="d-flex" style="margin-right:20px;">
                 <div class="input-group">
-                    <input type="text" placeholder="가게이름" class="form-control">
+                    <input type="text" name="keyword" placeholder="가게이름" class="form-control">
                     <button class="btn btn-light" type="submit">검색</button>
                 </div>
             </form>
             <form th:action="@{|/store/search_list_menu|}" method="post" class="d-flex">
                 <div class="input-group">
-                    <input type="text" placeholder="메뉴이름" class="form-control">
+                    <input type="text" name="keyword" placeholder="메뉴이름" class="form-control">
                     <button class="btn btn-light" type="submit">검색</button>
                 </div>
             </form>
@@ -104,9 +104,6 @@
                         }
                     });
                 });
-                setInterval(function() {
-                    location.reload(true);
-                }, 1000); // 1초마다 새로고침 (1000ms = 1초)
             }
         });
     });

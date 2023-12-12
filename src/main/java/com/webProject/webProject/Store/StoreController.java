@@ -234,6 +234,7 @@ public class StoreController {
 
     @PostMapping("/search_list")
     public String search_list(Model model, String keyword) {//, @RequestParam(value = "findAddress", required = false) String jibunAddress
+        System.out.println(keyword);
         List<Store> storeList = this.storeService.searchStoreList(keyword);
 //        List<Store> storeList  = this.storeService.getAddressList(jibunAddress);
 //        System.out.println(jibunAddress);

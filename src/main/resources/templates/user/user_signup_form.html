@@ -88,6 +88,34 @@
                                     </span>
                                 </div>
                             </div>
+                            <button type="button" class="btn btn-primary w-100 py-2" style="margin-top: 20px;" data-bs-toggle="modal" data-bs-target="#exampleModal">휴대폰 인증</button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">휴대폰 인증</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label for="phoneNumber" class="form-label">전화번호</label>
+                                            <div class="d-flex">
+                                                <input type="email" th:field="*{email}" class="form-control" placeholder="e-mail" required style="flex:3; margin-right:10px; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                                <button type="button" class="btn btn-secondary">인증요청</button>
+                                            </div>
+                                            <label for="verificationNum" class="form-label">인증번호</label>
+                                            <div class="d-flex">
+                                                <input type="email" th:field="*{email}" class="form-control" placeholder="e-mail" required style="flex:1; margin-right:10px; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                                <button type="button" class="btn btn-warning">인증확인</button>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <button class="btn btn-dark w-100 py-2" style="margin-top: 20px;" type="submit">회원가입</button>
                         </form>
                     </div>

@@ -1,6 +1,5 @@
 package com.webProject.webProject.Manager;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import com.webProject.webProject.Comment.Comment;
 import com.webProject.webProject.Comment.CommentService;
 import com.webProject.webProject.Photo.PhotoService;
@@ -11,7 +10,6 @@ import com.webProject.webProject.Store.Store;
 import com.webProject.webProject.Store.StoreService;
 import com.webProject.webProject.User.User;
 import com.webProject.webProject.User.UserService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
