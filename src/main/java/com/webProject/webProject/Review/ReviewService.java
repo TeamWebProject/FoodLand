@@ -90,4 +90,16 @@ public class ReviewService {
         review.getVoter().add(User);
         this.reviewRepository.save(review);
     }
+    public void deleteReviewsByUser(User user) {
+        List<Review> userReviews = reviewRepository.findByAuthor(user);
+
+        for (Review review : userReviews) {
+            List<Photo> photos = review.getPhotoList();
+            for (Photo photo : photos) {
+                photoRepository.delete(photo);
+            }
+            reviewRepository.delete(review);
+        }
+    }
+
 }

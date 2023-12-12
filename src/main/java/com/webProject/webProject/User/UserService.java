@@ -31,7 +31,7 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public User create(String userId, String email, String password, String nickname, String role, MultipartFile file) throws Exception {
+    public User create(String userId, String email, String password, String nickname, String role, String phone, MultipartFile file) throws Exception {
         String projectPath = imgLocation; // 파일 저장 위치 = projectPath
         //C:/Users/admin/Desktop/web_project/src/main/resources/static/img/
         UUID uuid = UUID.randomUUID(); // 식별자. 랜덤으로 이름 생성
@@ -56,6 +56,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
         user.setNickname(nickname);
         user.setRole(role);
+        user.setPhone(phone);
         user.setCreateDate(LocalDateTime.now());
         user.setProvider("web");  // 홈페이지에서 회원가입했을시 -> 소셜로그인 X
         user.setFileName(fileName); // 파일 이름
@@ -160,5 +161,9 @@ public class UserService {
     public User updatePassword(User user, String newPassword) {
         user.setPassword(passwordEncoder.encode(newPassword));
         return userRepository.save(user);
+    }
+
+    public List<User> findIdByPhone(String userPhone) {
+        return this.userRepository.findByPhone(userPhone);
     }
 }

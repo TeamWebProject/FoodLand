@@ -1,0 +1,87 @@
+<html layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<div layout:fragment="content" class="content-area" style="height: 93.8%;">
+    <div class="container d-flex justify-content-center align-items-center" style="width:100%; height: 100%;">
+        <div class="d-flex flex-column justify-content-start align-items-center" style="border: 2px solid gray; border-radius: 20px; width: 70%;height: 70%;">
+            <form th:action="@{/user/findPasswordPhone}" method="post"><!-- 조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                <div class="main-form">
+                    <h2 style="text-align: center;margin-top: 20px;">비밀번호 찾기</h2>
+                    <div style="text-align: center;margin-top: 20px;font-weight: bold; ">휴대전화번호로 찾기</div>
+                    <input type="hidden" name="verificationCodeSentPhone" th:value="${verificationCodeSentPhone}">
+                    <input type="hidden" name="verificationCodePhone" th:value="${verificationCodePhone}">
+                    <label for="userId" class="form-label d-flex justify-content-center">비밀번호를 찾으려는 아이디</label>
+                    <div class="d-flex justify-content-center">
+                        <input type="text" name="userId" id="userId" style="width:300px;margin-right:10px;" class="form-control" th:value="${userId}">
+                        <div th:unless="${verificationCodeSentPhone}" class="text-md-center"><!-- 조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                            <!-- 다음 버튼을 누르면 인증번호 입력란과 인증번호가 전송이됩니다. -->
+                            <button type="submit" class="next-btn btn btn-dark">다음</button>
+                        </div>
+                    </div>
+                    <!-- 메시지를 표시하는 부분 -->
+                    <div th:if="${message}" class="row mt-3">
+                        <div class="col-md-12 text-center">
+                            <p th:text="${message}"></p>
+                        </div>
+                    </div>
+                    <!-- 두번째 폼 시작 -->
+                    <div th:if="${verificationCodeSentPhone}">
+                        <label for="verificationCodePhone" class="form-label">인증번호</label>
+                        <div class="d-flex">
+                            <input type="password" name="inputVerificationCodePhone" id="verificationCodePhone" class="form-control" style="width:300px;margin-right:10px;" th:value="${param.inputVerificationCodePhone}">
+                            <div th:unless="${verificationCodeValidPhone}" class="text-md-center">
+                                <button type="submit" class="next-btn btn btn-dark d-flex justify-content-end;" >다음</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 수정: 새로운 비밀번호 입력 폼 -->
+                </div>
+            </form>
+            <!--  인증번호 재전송 폼입니다. 두번쨰폼열릴때 같이 열립니다.-->
+            <div th:if="${verificationCodeSentPhone}"><!--  조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                <form th:action="@{/user/resendVerificationCodePhone}" method="post">
+                    <input type="hidden" name="verificationCodeSentPhone" th:value="${verificationCodeSentPhone}"><!-- 2번째 폼 데이터! 조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                    <input type="hidden" name="verificationCodePhone" th:value="${verificationCodePhone}"><!-- 인증번호 데이터 ! 조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                    <input type="hidden" name="resendVerificationCodePhone"
+                           th:value="${resendVerificationCodePhone}"><!--재전송데이터! 조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                    <input type="hidden" name="verificationCodeValidPhone"
+                           th:value="${verificationCodeValidPhone}"><!-- 조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                    <input type="hidden" name="userId" th:value="${userId}">
+                    <!-- 조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                    <div class="d-flex justify-content-center" style="width: 200px; margin-top:20px;">
+                        <button class="sum-btn btn btn-dark">인증번호 재전송</button>
+                    </div>
+
+                </form>
+            </div>
+            <!-- 3번쨰 폼 위조건이 충족할때 재설정폼이 열립니다. -->
+            <!-- 비밀번호 재설정폼 -->
+            <form th:action="@{/user/passwordResetPhone}" method="post"><!-- 조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                <input type="hidden" name="userId" th:value="${userId}"><!-- 아이디 데이터 !조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                <input type="hidden" name="verificationCodePhone" th:value="${verificationCodePhone}"><!-- 인증번호 데이터 !조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                <input type="hidden" name="verificationCodeValidPhone" th:value="${verificationCodeValidPhone}"><!-- 3번째 폼 데이터~!조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                <div th:if="${verificationCodeValidPhone}" style="margin-top:20px;"><!-- 조건걸어서 폼열리는구조라 왠만하면 그대로 가져가주세요..-->
+                    <label for="newPassword" class="form-label">새로운 비밀번호</label>
+                    <input type="password" name="newPassword" id="newPassword" class="form-control" style="width: 370px;" th:value="${newPassword}">
+                    <label for="newPassword1" class="form-label" style="margin-top:10px;">비밀번호 확인</label>
+                    <input type="password" name="newPassword1" id="newPassword1" class="form-control" style="width: 370px;" th:value="${newPassword1}">
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="reset-btn btn btn-dark" style="margin-top:20px;" onclick="checkNewPasswords()">비밀번호 재설정</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script layout:fragment="script" type='text/javascript'>
+    function checkNewPasswords() {
+        var newPassword = $('#newPassword').val();
+        var newPassword1 = $('#newPassword1').val();
+
+        if (newPassword === newPassword1) {
+            alert('새로 입력하신 PW가 동일합니다.');
+            document.querySelector("form").submit();
+        } else {
+            alert('새로 입력하신 PW가 동일하지 않습니다.');
+        }
+    }
+</script>
+</html>
