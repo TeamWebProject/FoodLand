@@ -55,9 +55,30 @@
                             <!-- 부트스트랩 카드 -->
                             <div class="d-flex flex-column" style="width: 100%; height:100%; margin:5px;">
                                 <!-- 최대 6개 이미지만 출력 -->
-                                <div th:each="photo : ${menu.photoList}" style="width:90%; height:80%;">
-                                    <img class="card-img-top" th:if="${photo.fileName != null}" th:src="@{|/photo/${photo.fileName}|}" alt="Menu Photo" style="object-fit: cover; width: 100%; height: 100%; border-radius:10px;"/>
+
+
+                                <div th:id="'carouselExampleFade' + ${menu.getId}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div th:each="photo, iterStat : ${menu.photoList}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active' : ''">
+                                            <img class="card-img-top" th:src="@{|/photo/${photo.fileName}|}" alt="Menu Photo" style="object-fit: cover; width: 200px; height: 200px; border-radius: 10px;"/>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleFade' + ${menu.id}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">이전</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" th:data-bs-target="'#carouselExampleFade' + ${menu.id}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">다음</span>
+                                    </button>
                                 </div>
+
+
+
+
+<!--                                <div th:each="photo : ${menu.photoList}" style="width:90%; height:80%;">-->
+<!--                                    <img class="card-img-top" th:if="${photo.fileName != null}" th:src="@{|/photo/${photo.fileName}|}" alt="Menu Photo" style="object-fit: cover; width: 100%; height: 100%; border-radius:10px;"/>-->
+<!--                                </div>-->
                                 <div style="width:100%; height:10%;">
                                     <p class="text-dark small" th:text="${menu.menuName}" style="margin:0;"></p>
                                 </div>
@@ -82,21 +103,39 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body" style="max-height: 70vh; overflow-y: auto;"> <!-- Set a max-height and enable vertical scrolling -->
-                                <div class="row row-cols-1 row-cols-md-3">
+<!--                                <div class="row row-cols-1 row-cols-md-3">-->
                                     <div th:each="menu : ${menuList}">
-                                        <div th:each="photo : ${menu.photoList}">
+<!--                                        <div th:each="photo : ${menu.photoList}">-->
                                             <div class="col mb-4">
-                                                <div class="card">
-                                                    <img th:src="@{'/img/' + ${photo.fileName}}" alt="Menu Photo" style="object-fit: cover; width:100%; height:200px;">
+
+                                                <div class="card" style="width: 18rem;">
+
+                                                    <div th:id="'carouselExampleFade2' + ${menu.getId}" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                            <div th:each="photo, iterStat : ${menu.photoList}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active' : ''">
+                                                                <img class="card-img-top" th:src="@{|/photo/${photo.fileName}|}" alt="Menu Photo" style="object-fit: cover; width: 300px; height: 300px; border-radius: 10px;"/>
+                                                            </div>
+                                                        </div>
+                                                        <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleFade2' + ${menu.id}" data-bs-slide="prev">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">이전</span>
+                                                        </button>
+                                                        <button class="carousel-control-next" type="button" th:data-bs-target="'#carouselExampleFade2' + ${menu.id}" data-bs-slide="next">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">다음</span>
+                                                        </button>
+                                                    </div>
+
                                                     <div class="card-body">
-                                                        <h5 class="card-title text-dark small" th:text="${menu.menuName}"></h5>
+                                                        <p class="card-title text-dark small" th:text="${menu.menuName}"></p><br>
                                                         <p class="card-text text-dark small" th:text="${menu.price} + '원'"></p>
                                                     </div>
                                                 </div>
+
                                             </div>
-                                        </div>
+<!--                                        </div>-->
                                     </div>
-                                </div>
+<!--                                </div>-->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                                 </div>
