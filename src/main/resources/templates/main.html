@@ -1,7 +1,20 @@
 <html layout:decorate="~{layout}" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">
 <div layout:fragment="content" class="content-area d-flex justify-content-center align-items-center" style="width:100%; height: 93.8vh;">
-    <div style="width:80%; height:100%;">
-        <img src="food.jpg" style="width:100%; height: 100%;">
+    <div style="position: relative; width: 80%; height: 100%;">
+        <!-- Carousel Container -->
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="position: absolute; top: 16%; left: 25%; width: 50%; height: 38%;">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="2000" style="text-align: center; z-index: 2; top: 50%; margin-top: 25%;">
+                    <h1 style="color:white"><strong>어서오세요!</strong></h1>
+                    <p style="font-size:20px; color:white"><strong>Store List입니다.</strong></p>
+                </div>
+                <div class="carousel-item" style="text-align: center; z-index: 2; top: 50%; margin-top: 25%;">-->
+                    <h1 style="color:white"><strong>원하는 맛집을 찾아보세요~!</strong></h1>
+                </div>
+            </div>
+        </div>
+        <!-- Background Image -->
+        <img src="food.jpg" class="d-block w-100" alt="..." style="height: 100%;">
     </div>
     <div style="width: 50%; height: 100%; display: flex; justify-content: center; align-items: center;
         background: linear-gradient(to bottom, black, #333, #666, #999, #ccc);">
