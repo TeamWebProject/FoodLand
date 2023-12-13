@@ -31,7 +31,7 @@ public class CommentController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/create/review/{id}")
     public String createReviewComment(CommentForm commentForm) {
-        return "comment_form";
+        return "comment/comment_form";
     }
 
     // 질문에 대한 코멘트
