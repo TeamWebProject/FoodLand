@@ -151,6 +151,10 @@ public class StoreService {
         return false;
     }
 
+    public List<Store> searchkeywordstore(String keyword) {
+        return this.storeRepository.findAllBynameKeyword(keyword);
+    }
+
 
 //    // 데이터베이스에서 음식점 목록을 가져오는 메서드
 //    public List<Store> getRestaurantsNearby(double userLatitude, double userLongitude) {
