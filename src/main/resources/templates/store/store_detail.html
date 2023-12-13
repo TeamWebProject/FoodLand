@@ -1,6 +1,7 @@
 <html layout:decorate="~{layout}" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <div layout:fragment="content" class="content-area" style="height:93.8%;">
+    <a class="btn btn-sm btn-light" th:href="@{|/store/owner/list|}">뒤로가기</a>
     <div class="d-flex" style="width:100%;height:93.8%;">
         <!-- 좌측 컨텐츠 -->
         <div style="width:65%;height:100%; margin: 20px 20px 0 20px;">
@@ -93,7 +94,7 @@
 
 
                                 <div th:each="photo : ${menu.photoList}" style="width:90%; height:80%;">
-                                    <img class="card-img-top" th:if="${photo.fileName != null}" th:src="@{|/photo/${photo.fileName}|}" alt="Menu Photo" style="object-fit: cover; width: 80%; height: 80%; border-radius:10px;"/>
+                                    <img class="card-img-top" th:if="${photo.fileName != null}" th:src="@{|/photo/${photo.fileName}|}" alt="Menu Photo" style="object-fit: cover; width: 100%; height: 100%; border-radius:10px;"/>
                                 </div>
                                 <div style="width:100%; height:10%;">
                                     <p class="text-dark small" th:text="${menu.menuName}" style="margin:0;"></p>
@@ -112,7 +113,7 @@
                     </div>
                 </div>
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">메뉴</h5>
@@ -121,10 +122,10 @@
                             <div class="modal-body" style="max-height: 70vh; overflow-y: auto;"> <!-- Set a max-height and enable vertical scrolling -->
                                 <div class="row row-cols-1 row-cols-md-3">
                                     <div th:each="menu : ${menuList}">
-                                        <div th:each="photo : ${menu.photoList}">
-                                            <div class="col mb-4">
+                                        <div th:each="photo : ${menu.photoList}" >
+                                            <div class="col mb-4" >
 
-                                                <div class="card" style="width: 18rem;">
+                                                <div class="card" style="width: 18rem; margin-right:20px; ">
                                                     <img class="card-img-top" th:src="@{|/photo/${photo.fileName}|}" alt="Menu Photo" style="object-fit: cover; width: 100%; height: 100%; border-radius: 10px;"/>
                                                     <!--메뉴사진여러장일때 -> 캐러셀처리 (주석 지워도됨)-->
 <!--                                                    <div th:id="'carouselExampleFade2' + ${menu.getId}" class="carousel slide carousel-fade" data-bs-ride="carousel">-->
