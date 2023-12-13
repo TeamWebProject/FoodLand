@@ -53,23 +53,25 @@ public class MenuController {
         } else {
             menu.setPrice(Integer.valueOf(pricestring));
         }
-//        boolean filesSelected = fileList.stream().anyMatch(file -> !file.isEmpty());    // false -> true
-//        if (!filesSelected) {   //false
-//            photoService.savedefaultImgsForMenu(menu, fileList);
-//        } else {
-//            photoService.saveImgsForMenu(menu, fileList);
-//        }
-//        menuService.setMenu(menu);
-//        return "redirect:/store/menuList/" + menu.getStore().getId();
 
-        if (file != null && !file.isEmpty()) {
+        if (file != null && !file.isEmpty()) { // 파일 업로드 했
+//            if (!menu.getPhotoList().isEmpty()) { // a메뉴 등록사진 이미 존재할때,
+//
+//            }
+//
+
+
             // 파일이 선택된 경우에만 파일 저장 로직을 실행
             photoService.deleteMenuImage(menu);
             photoService.saveImgsForMenu(menu, Collections.singletonList(file));
-        } else if (menu.getPhotoList().isEmpty()){
+        } else if (menu.getPhotoList().isEmpty()){ //파일 업로드 안했을때 + 추가조건 ,.,.,, 기존이미지잇을때,,도추가해라
             // 파일이 선택되지 않았고, 저장된 이미지 없을 경우 기본 이미지 저장 로직 실행
             photoService.savedefaultImgsForMenu(menu, Collections.emptyList());
         }
+
+//        if (!menu.getPhotoList().isEmpty()) {
+//
+//        }
 
         menuService.setMenu(menu);
         return "redirect:/store/menuList/" + menu.getStore().getId();

@@ -24,4 +24,6 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
     @Query("SELECT s FROM Store s WHERE s.name LIKE %:keyword%")
     Page<Store> findownerStoresByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
+    @Query("select distinct s from Store s where s.name like %:kw%")
+    List<Store> findAllBynameKeyword(@Param("kw") String kw);
 }
