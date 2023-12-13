@@ -140,6 +140,7 @@ public class StoreService {
     }
 
 
+
     public boolean deleteExistingFile(String existingFilePath) {
         if (existingFilePath != null && !existingFilePath.isEmpty()) {
             File existingFile = new File(existingFilePath);
@@ -149,10 +150,6 @@ public class StoreService {
             }
         }
         return false;
-    }
-
-    public List<Store> searchkeywordstore(String keyword) {
-        return this.storeRepository.findAllBynameKeyword(keyword);
     }
 
 
