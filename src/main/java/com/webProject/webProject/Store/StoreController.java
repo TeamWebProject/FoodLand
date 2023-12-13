@@ -121,20 +121,6 @@ public class StoreController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/owner/list")
-    public String ownerpage_list(Model model,Principal principal, @RequestParam(value ="page", defaultValue = "0")int page) {
-
-        if (principal == null ) {
-            return "redirect:/user/login";
-        } else {
-            User siteUser = this.userService.getUser(principal.getName());
-            Page<Store> paging = this.storeService.getownerList(page, siteUser);
-            model.addAttribute("paging",paging);
-            return "store/store_owner_list";
-        }
-    }
-
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{storeid}")
     public String modifystore(Model model, StoreForm storeForm, @PathVariable("storeid")Integer id ,Principal principal) {
         Store store = storeService.findstoreById(id);
@@ -219,27 +205,56 @@ public class StoreController {
         return "menu/menu_list";
     }
 
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/owner/list")
+    public String ownerpage_list(Model model,Principal principal, @RequestParam(value ="page", defaultValue = "0")int page) {
+
+        if (principal == null ) {
+            return "redirect:/user/login";
+        } else {
+            User siteUser = this.userService.getUser(principal.getName());
+            Page<Store> paging = this.storeService.getownerList(page, siteUser);
+            model.addAttribute("paging",paging);
+            return "store/store_owner_list";
+        }
+    }
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/owner/search_list")
     public String owner_storesearch(Principal principal, String keyword, Model model, @RequestParam(value ="page", defaultValue = "0")int page) {
         if (principal == null ) {
             return "redirect:/user/login";
         } else {
-            Page<Store> paging = this.storeService.getList(page, keyword);
+            Page<Store> paging = this.storeService.searchownerStoreList(page, keyword);
+            model.addAttribute("paging",paging);
+            return "store/store_owner_list";
+        }
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/owner/search_list")
+    public String owner_storesearch2(Principal principal, String keyword, Model model, @RequestParam(value ="page", defaultValue = "0")int page) {
+        if (principal == null ) {
+            return "redirect:/user/login";
+        } else {
+            Page<Store> paging = this.storeService.searchownerStoreList(page, keyword);
             model.addAttribute("paging",paging);
             return "store/store_owner_list";
         }
     }
 
 
+
+
     @PostMapping("/search_list")
     public String search_list(Model model, String keyword) {//, @RequestParam(value = "findAddress", required = false) String jibunAddress
         System.out.println(keyword);
-        List<Store> storeList = this.storeService.searchStoreList(keyword);
+//        List<Store> storeList = this.storeService.searchStoreList(keyword);
 //        List<Store> storeList  = this.storeService.getAddressList(jibunAddress);
 //        System.out.println(jibunAddress);
         model.addAttribute("location", "대전");
-        model.addAttribute("storeList", storeList);
+//        model.addAttribute("storeList", storeList);
         return "store/store_list";
     }
 

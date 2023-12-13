@@ -120,8 +120,7 @@ public class StoreService {
     public Page<Store> getownerList(int page, User owner) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
-        Pageable pageable = PageRequest.of(page,10, Sort.by(sorts));
-
+        Pageable pageable = PageRequest.of(page,9, Sort.by(sorts));
         return this.storeRepository.findAllByownerId(owner.getNickname(), pageable);
     }
 
@@ -133,8 +132,11 @@ public class StoreService {
         return this.storeRepository.findStoreByKeyword(kw, pageable);
     }
 
-    public List<Store> searchStoreList(String keyword) {
-        return this.storeRepository.findStoresByKeyword(keyword);
+    public Page<Store> searchownerStoreList(int page, String keyword) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 9, Sort.by(sorts));
+        return this.storeRepository.findownerStoresByKeyword(keyword, pageable);
     }
 
 
