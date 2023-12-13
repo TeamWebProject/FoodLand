@@ -221,28 +221,29 @@ public class StoreController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/owner/search_list")
-    public String owner_storesearch(Principal principal, String keyword, Model model, @RequestParam(value ="page", defaultValue = "0")int page) {
+    @GetMapping("/owner/search_list")
+    public String owner_storesearch(Principal principal, @RequestParam(value = "keyword", defaultValue = "") String keyword, Model model, @RequestParam(value ="page", defaultValue = "0")int page) {
         if (principal == null ) {
             return "redirect:/user/login";
         } else {
             Page<Store> paging = this.storeService.searchownerStoreList(page, keyword);
+            model.addAttribute("keyword",keyword);
             model.addAttribute("paging",paging);
             return "store/store_owner_list";
         }
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/owner/search_list")
-    public String owner_storesearch2(Principal principal, String keyword, Model model, @RequestParam(value ="page", defaultValue = "0")int page) {
-        if (principal == null ) {
-            return "redirect:/user/login";
-        } else {
-            Page<Store> paging = this.storeService.searchownerStoreList(page, keyword);
-            model.addAttribute("paging",paging);
-            return "store/store_owner_list";
-        }
-    }
+//    @PreAuthorize("isAuthenticated()")
+//    @GetMapping("/owner/search_list")
+//    public String owner_storesearch2(Principal principal, String keyword, Model model, @RequestParam(value ="page", defaultValue = "0")int page) {
+//        if (principal == null ) {
+//            return "redirect:/user/login";
+//        } else {
+//            Page<Store> paging = this.storeService.searchownerStoreList(page, keyword);
+//            model.addAttribute("paging",paging);
+//            return "store/store_owner_list";
+//        }
+//    }
 
 
 
@@ -250,13 +251,16 @@ public class StoreController {
     @PostMapping("/search_list")
     public String search_list(Model model, String keyword) {//, @RequestParam(value = "findAddress", required = false) String jibunAddress
         System.out.println(keyword);
-        List<Store> storeList = this.storeService.searchkeywordstore(keyword);
+//        List<Store> storeList = this.storeService.searchkeywordstore(keyword);
 //        List<Store> storeList  = this.storeService.getAddressList(jibunAddress);
 //        System.out.println(jibunAddress);
         model.addAttribute("location", "대전");
-        model.addAttribute("storeList", storeList);
+//        model.addAttribute("storeList", storeList);
         return "store/store_list";
     }
+
+
+
 
     @PostMapping("/search_list_menu")
     public String search_list_menu(Model model, String keyword) {//, @RequestParam(value = "findAddress", required = false) String jibunAddress
