@@ -151,42 +151,4 @@ public class StoreService {
         }
         return false;
     }
-
-
-//    // 데이터베이스에서 음식점 목록을 가져오는 메서드
-//    public List<Store> getRestaurantsNearby(double userLatitude, double userLongitude) {
-//        // 데이터베이스에서 모든 음식점 정보를 가져옴
-//        List<Store> allStores = storeRepository.getAllStores();
-//        List<Store> nearbyStores = new ArrayList<>();
-//
-//        // 사용자 위치와 음식점 위치를 기반으로 거리를 계산하여 3km 이내의 음식점을 선택
-//        for (Store store : allStores) {
-//            double distance = calculateDistance(userLatitude, userLongitude, store.getLatitude(), store.getLongitude());
-//            if (distance <= 3.0) {
-//                nearbyStores.add(store);
-//            }
-//        }
-//
-//        return nearbyStores;
-//    }
-//
-//    // 두 지점 간의 거리를 계산하는 메서드 (Haversine 공식 활용)
-//    private double calculateDistance(double x1, double y1, double x2, double y2) {
-//        double distance;
-//        double radius = 6371; // 지구 반지름(km)
-//        double toRadian = Math.PI / 180;
-//
-//        double deltaLatitude = Math.abs(x1 - x2) * toRadian;
-//        double deltaLongitude = Math.abs(y1 - y2) * toRadian;
-//
-//        double sinDeltaLat = Math.sin(deltaLatitude / 2);
-//        double sinDeltaLng = Math.sin(deltaLongitude / 2);
-//        double squareRoot = Math.sqrt(
-//                sinDeltaLat * sinDeltaLat +
-//                        Math.cos(x1 * toRadian) * Math.cos(x2 * toRadian) * sinDeltaLng * sinDeltaLng);
-//
-//        distance = 2 * radius * Math.asin(squareRoot);
-//
-//        return distance;
-//    }
 }

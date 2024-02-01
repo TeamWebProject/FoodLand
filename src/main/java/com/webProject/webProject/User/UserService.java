@@ -1,6 +1,9 @@
 package com.webProject.webProject.User;
 
+import com.webProject.webProject.AppConfig;
 import com.webProject.webProject.DataNotFoundException;
+import com.webProject.webProject.Tag.Tag;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -24,15 +27,13 @@ import java.util.*;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    @Value("${ImgLocation}")
-    public String imgLocation;
 
     public List<User> getUserList() {
         return this.userRepository.findAll();
     }
 
     public User create(String userId, String email, String password, String nickname, String role, String phone, MultipartFile file) throws Exception {
-        String projectPath = imgLocation; // 파일 저장 위치 = projectPath
+        String projectPath = AppConfig.getImageFileDirPath();; // 파일 저장 위치 = projectPath
         //C:/Users/admin/Desktop/web_project/src/main/resources/static/img/
         UUID uuid = UUID.randomUUID(); // 식별자. 랜덤으로 이름 생성
         String fileName;
@@ -77,7 +78,7 @@ public class UserService {
     }
 
     public User modify(User user, String nickname, String email, MultipartFile file) throws IOException {
-        String projectPath = imgLocation;
+        String projectPath = AppConfig.getImageFileDirPath();;
         String existingFilePath = user.getFilePath();
 
         if (file != null && !file.isEmpty()) {
@@ -165,5 +166,24 @@ public class UserService {
 
     public List<User> findIdByPhone(String userPhone) {
         return this.userRepository.findByPhone(userPhone);
+    }
+
+    @PostConstruct
+    public void init() {
+        saveDefaultAdmin();
+    }
+
+    public void saveDefaultAdmin() {
+        if (userRepository.findByrole("admin") == null) {
+            User user = new User();
+            user.setUserId("admin");
+            user.setPassword(passwordEncoder.encode("1234"));
+            user.setNickname("관리자");
+            user.setEmail("admin@naver.com");
+            user.setRole("admin");
+            user.setCreateDate(LocalDateTime.now());
+            user.setPhone("01011112222");
+            userRepository.save(user);
+        }
     }
 }

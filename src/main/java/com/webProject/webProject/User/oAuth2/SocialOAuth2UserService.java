@@ -1,5 +1,6 @@
 package com.webProject.webProject.User.oAuth2;
 
+import com.webProject.webProject.AppConfig;
 import com.webProject.webProject.CustomUser;
 import com.webProject.webProject.User.User;
 import com.webProject.webProject.User.UserRepository;
@@ -32,9 +33,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SocialOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final UserRepository userRepository;
-
-    @Value("${ImgLocation}")
-    public String imgLocation;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -94,7 +92,7 @@ public class SocialOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     //구글
     public CustomUser saveOrUpdateGoogle(String googleId, String email, String nickname, String img) throws IOException {
-        String projectPath = imgLocation;
+        String projectPath = AppConfig.getImageFileDirPath();;
 
         User user = this.userRepository.findByuserId(googleId).orElse(new User());
         String existingFilePath = user.getFilePath();
@@ -140,7 +138,7 @@ public class SocialOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     //카카오
     public CustomUser saveOrUpdateKakao(String kakaoId, String name, String img) throws IOException {
-        String projectPath = imgLocation;
+        String projectPath = AppConfig.getImageFileDirPath();;
 
         User user = this.userRepository.findByuserId(kakaoId).orElse(new User());
         String existingFilePath = user.getFilePath();
@@ -183,7 +181,7 @@ public class SocialOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     //네이버
     public CustomUser saveOrUpdateNaver(String naverId, String email, String nickname, String img) throws IOException {
-        String projectPath = imgLocation;
+        String projectPath = AppConfig.getImageFileDirPath();;
 
         User user = this.userRepository.findByuserId(naverId).orElse(new User());
         String existingFilePath = user.getFilePath();
@@ -228,7 +226,7 @@ public class SocialOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     public String saveImageFromUrl(String nickname, String clientName, String imageUrl) {
         UUID uuid = UUID.randomUUID(); // 식별자. 랜덤으로 이름 생성
         String imageName = uuid + "_" + clientName + "_" + nickname + "_img.jpg"; // 이미지 파일명
-        String staticImagesDirectory = imgLocation;
+        String staticImagesDirectory = AppConfig.getImageFileDirPath();;
         try {
             URL url = new URL(imageUrl);
             ReadableByteChannel readableByteChannel = Channels.newChannel(url.openStream());

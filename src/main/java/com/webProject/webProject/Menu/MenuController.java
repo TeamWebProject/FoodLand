@@ -29,8 +29,7 @@ public class MenuController {
     private final MenuService menuService;
     private final StoreService storeService;
     private final PhotoService photoService;
-    @Value("${ImgLocation}")
-    public String imgLocation;
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/addmenu")
     public String addmenu(Integer storeid) {

@@ -1,6 +1,7 @@
 package com.webProject.webProject.User;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.webProject.webProject.AppConfig;
 import com.webProject.webProject.CustomUser;
 import com.webProject.webProject.DataNotFoundException;
 import com.webProject.webProject.SNS.SMSService;
@@ -234,16 +235,14 @@ public class UserController {
             return ResponseEntity.ok("NO");
         }
     }
-    @Value("${ImgLocation}")
-    public String imgLocation;
 
     @PostMapping("/profile/upload")
     public ResponseEntity<String> handleFileUpload(@RequestParam("image") MultipartFile file) throws IOException {
         // 새 이미지 파일 업로드
-        String fileName = this.userService.uploadFile(file, imgLocation);
+        String fileName = this.userService.uploadFile(file, AppConfig.getImageFileDirPath());
         if (fileName != null) {
             // 기존 이미지 파일 경로 설정
-            String existingImagePath = imgLocation + fileName;
+            String existingImagePath = AppConfig.getImageFileDirPath() + fileName;
             System.out.println("Existing Image Path: " + existingImagePath);
 
             // 기존 이미지 파일 삭제

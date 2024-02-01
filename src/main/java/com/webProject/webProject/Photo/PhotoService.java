@@ -1,5 +1,6 @@
 package com.webProject.webProject.Photo;
 
+import com.webProject.webProject.AppConfig;
 import com.webProject.webProject.Menu.Menu;
 import com.webProject.webProject.Review.Review;
 import com.webProject.webProject.Review.ReviewRepository;
@@ -27,14 +28,11 @@ import java.util.UUID;
 public class PhotoService {
     private final PhotoRepository photoRepository;
 
-    @Value("${ImgLocation}")
-    public String imgLocation;
-
     public void saveImgsForReview(Review review, List<MultipartFile> files) throws Exception {
         if (review != null && files != null && !files.isEmpty()) {
             for (MultipartFile file : files) {
                 if (!file.isEmpty()) {
-                    String projectPath = imgLocation;
+                    String projectPath = AppConfig.getImageFileDirPath();
                     UUID uuid = UUID.randomUUID();
                     String fileName = uuid + "_" + file.getOriginalFilename();
                     File saveFile = new File(projectPath, fileName);
@@ -70,7 +68,7 @@ public class PhotoService {
         if (store != null && files != null && !files.isEmpty()) {
             for (MultipartFile file : files) {
                 if (!file.isEmpty()) {
-                    String projectPath = imgLocation;
+                    String projectPath = AppConfig.getImageFileDirPath();;
                     UUID uuid = UUID.randomUUID();
                     String fileName = uuid + "_" + file.getOriginalFilename();
                     File saveFile = new File(projectPath, fileName);
@@ -112,7 +110,7 @@ public class PhotoService {
 
     public void saveImgsForMenu(Menu menu, List<MultipartFile> files) throws Exception {
         if (menu != null && files != null && !files.isEmpty()) {
-            String projectPath = imgLocation;
+            String projectPath = AppConfig.getImageFileDirPath();;
 
             for (MultipartFile file : files) {
                 if (!file.isEmpty()) {
@@ -141,7 +139,7 @@ public class PhotoService {
 
 
     public void savedefaultImgsForMenu(Menu menu, List<MultipartFile> files) throws IOException {
-        String projectPath = imgLocation;
+        String projectPath = AppConfig.getImageFileDirPath();;
         String fileName = "no_img.jpg";
 
         if (files == null || files.isEmpty() || (files.size() == 1 && files.get(0).getOriginalFilename().isEmpty())) {
